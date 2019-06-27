@@ -32,18 +32,19 @@ public class HelloTweet {
 
             LocalDate dt1 = LocalDate.fromYearMonthDay(2019,05,25);
             Tweet tw1 = new Tweet ("cara", "chato", dt);
-            br.inserttweet(tw);
+            br.inserttweet(tw1);
 
             LocalDate dt2 = LocalDate.fromYearMonthDay(2019,05,24);
             Tweet tw2 = new Tweet ("eita", "ferro", dt);
-            br.inserttweet(tw);
+            br.inserttweet(tw2);
 
             LocalDate dt3 = LocalDate.fromYearMonthDay(2019,05,23);
-            Tweet tw3 = new Tweet ("sinistro", "caamba", dt);
+            Tweet tw3 = new Tweet ("sinistro", "caramba", dt);
+            br.inserttweet(tw3);
 
             LocalDate dt4 = LocalDate.fromYearMonthDay(2019,05,22);
             Tweet tw4 = new Tweet ("house", "amazing", dt);
-            br.inserttweet(tw);
+            br.inserttweet(tw4);
             System.out.println("Insert tweets");
 
             br.selectAll();

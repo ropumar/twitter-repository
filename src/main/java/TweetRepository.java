@@ -20,7 +20,12 @@ public class TweetRepository {
      */
     public void createTable() {
         System.out.println("createTable init");
-        StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ").append(TABLE_NAME).append("(").append("id UUID PRIMARY KEY, ").append("id UUID,").append("message text,").append("date localdate,");
+        StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ")
+                .append(TABLE_NAME).append("(")
+                .append("id UUID PRIMARY KEY, ")
+                .append("name text,")
+                .append("message text,")
+                .append("date date);");
 
         final String query = sb.toString();
         session.execute(query);
@@ -34,8 +39,13 @@ public class TweetRepository {
      */
     public void inserttweet(Tweet tw) {
         System.out.println("inserttweet init");
-        StringBuilder sb = new StringBuilder("INSERT INTO ").append(TABLE_NAME).append("(id,name, message, date) ").append("VALUES (").append(tw.getUUID()).append(", '").append(tw.getName()).append(", '").append(tw.getMessage()).append("', '").append(tw.getDate());
-
+        StringBuilder sb = new StringBuilder("INSERT INTO ")
+                .append(TABLE_NAME)
+                .append("(id,name, message, date) ").append("VALUES (")
+                .append(tw.getUUID()).append(", '")
+                .append(tw.getName()).append("', '")
+                .append(tw.getMessage()).append("', '")
+                .append(tw.getDate()).append("');");
         final String query = sb.toString();
         session.execute(query);
         System.out.println("inserttweet end");
