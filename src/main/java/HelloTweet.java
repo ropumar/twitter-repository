@@ -25,25 +25,24 @@ public class HelloTweet {
             br.createTable();
             System.out.println("Create table tweet");
 
-            System.out.println("Create Table tweet");
-            LocalDate dt = LocalDate.fromYearMonthDay(2019,05,26);
-            Tweet tw = new Tweet ("Bolsonaro", "Jair", dt);
+            LocalDate dt = LocalDate.fromYearMonthDay(2019,3,26);
+            Tweet tw = new Tweet (dt, "jair","bolsonaro",true, 12.0,13.0,true,"Rod1",14);
             br.inserttweet(tw);
 
-            LocalDate dt1 = LocalDate.fromYearMonthDay(2019,05,25);
-            Tweet tw1 = new Tweet ("cara", "chato", dt);
+            LocalDate dt1 = LocalDate.fromYearMonthDay(2019,3,25);
+            Tweet tw1 = new Tweet (dt1, "2","-2",true, 2,2,true,"Rod2",2);
             br.inserttweet(tw1);
 
-            LocalDate dt2 = LocalDate.fromYearMonthDay(2019,05,24);
-            Tweet tw2 = new Tweet ("eita", "ferro", dt);
+            LocalDate dt2 = LocalDate.fromYearMonthDay(2019,3,24);
+            Tweet tw2 = new Tweet (dt2, "3","-3",true, 3,3,true,"Rod3",3);
             br.inserttweet(tw2);
 
-            LocalDate dt3 = LocalDate.fromYearMonthDay(2019,05,23);
-            Tweet tw3 = new Tweet ("sinistro", "caramba", dt);
+            LocalDate dt3 = LocalDate.fromYearMonthDay(2019,3,23);
+            Tweet tw3 = new Tweet (dt3, "4","-4",true, 4,4,true,"Rod4",4);
             br.inserttweet(tw3);
 
-            LocalDate dt4 = LocalDate.fromYearMonthDay(2019,05,22);
-            Tweet tw4 = new Tweet ("house", "amazing", dt);
+            LocalDate dt4 = LocalDate.fromYearMonthDay(2019,3,22);
+            Tweet tw4 = new Tweet (dt4, "Jair","Bolsonaro",true, 12,34,true,"Rod5",21);
             br.inserttweet(tw4);
             System.out.println("Insert tweets");
 

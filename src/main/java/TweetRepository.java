@@ -1,7 +1,4 @@
-import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.Session;
-import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Row;
+import com.datastax.driver.core.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -14,7 +11,6 @@ public class TweetRepository {
     public TweetRepository(Session session) {
         this.session = session;
     }
-
     /**
      * Creates the tweet table.
      */
@@ -22,10 +18,16 @@ public class TweetRepository {
         System.out.println("createTable init");
         StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ")
                 .append(TABLE_NAME).append("(")
-                .append("id UUID PRIMARY KEY, ")
-                .append("name text,")
-                .append("message text,")
-                .append("date date);");
+                .append("id uuid PRIMARY KEY, ")
+                .append("createdDate date,")
+                .append("text text,")
+                .append("source text,")
+                .append("isTruncated boolean,")
+                .append("latitude double,")
+                .append("longitude double,")
+                .append("isFavorited boolean,")
+                .append("user text,")
+                .append("contributors bigint);");
 
         final String query = sb.toString();
         session.execute(query);
@@ -41,11 +43,18 @@ public class TweetRepository {
         System.out.println("inserttweet init");
         StringBuilder sb = new StringBuilder("INSERT INTO ")
                 .append(TABLE_NAME)
-                .append("(id,name, message, date) ").append("VALUES (")
-                .append(tw.getUUID()).append(", '")
-                .append(tw.getName()).append("', '")
-                .append(tw.getMessage()).append("', '")
-                .append(tw.getDate()).append("');");
+                .append("(id,date, text, source, isTruncated, latitude,longitude, isFavorited, user, contributors) ")
+                .append("VALUES ( ")
+                .append(tw.getUUID()).append("', '")
+                .append(tw.getDate()).append("', '")
+                .append(tw.getText()).append("', '")
+                .append(tw.getSource()).append("', '")
+                .append(tw.getIsTruncated()).append(", '")
+                .append(tw.getLatitude()).append(", '")
+                .append(tw.getLongitude()).append(", '")
+                .append(tw.getIsFavorited()).append(", '")
+                .append(tw.getUser()).append("', '")
+                .append(tw.getContributors()).append("');");
         final String query = sb.toString();
         session.execute(query);
         System.out.println("inserttweet end");
@@ -67,7 +76,7 @@ public class TweetRepository {
         List<Tweet> tweets = new ArrayList<Tweet>();
 
         for (Row r : rs) {
-            Tweet tw = new Tweet(r.getString("name"), r.getString("message"), r.getDate("date"));
+            Tweet tw = new Tweet(r.getDate("date"),r.getString("text"), r.getString("source"), r.getBool("isTruncated"),r.getDouble("latitude"),r.getDouble("latitude"),r.getBool("longitude"),r.getString("user"),r.getLong("contributors"));
             tweets.add(tw);
         }
         System.out.println("selectAll end");
