@@ -16,7 +16,7 @@ public class Tweet {
     private String user;
     private long contributors;
 
-    public Tweet(LocalDate createdDate, String text,String source,boolean isTruncated,double latitude, double longitude,boolean isFavorited,String user,long contributors) {
+    public Tweet(LocalDate createdDate, String text,String source,boolean isTruncated,double latitude, double longitude,boolean isFavorited,String user, long contributors) {
         this.createdDate = createdDate;
         this.id = UUID.randomUUID();
         this.text = text;
