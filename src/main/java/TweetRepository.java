@@ -16,7 +16,7 @@ public class TweetRepository {
      * Creates the tweet table.
      */
     public void createTable() {
-        System.out.println("createTable init");
+        System.out.println("createTable - init");
         StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ")
                 .append(TABLE_NAME).append("(")
                 .append("id uuid PRIMARY KEY, ")
@@ -31,6 +31,7 @@ public class TweetRepository {
                 .append("contributors bigint);");
 
         final String query = sb.toString();
+        System.out.println("createTable - command: " + query);
         session.execute(query);
         System.out.println("createTable end");
     }
@@ -39,7 +40,7 @@ public class TweetRepository {
      * Creates the tweet table by Tittle
      */
     public void createTableByUser() {
-        System.out.println("createTableByUser init");
+        System.out.println("createTableByUser - init");
         StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ").append(TABLE_NAME_BY_USER)
                 .append("(")
                 .append("id uuid, ")
@@ -55,8 +56,9 @@ public class TweetRepository {
                 .append("PRIMARY KEY (user, id));");
 
         final String query = sb.toString();
+        System.out.println("createTableByUser - command: " + query);
         session.execute(query);
-        System.out.println("createTable end");
+        System.out.println("createTableByUser end");
     }
 
     /**
@@ -81,6 +83,7 @@ public class TweetRepository {
                 .append(tw.getUser()).append("', ")
                 .append(tw.getContributors()).append(");");
         final String query = sb.toString();
+        System.out.println("inserttweet - command: " + query);
         session.execute(query);
         System.out.println("inserttweet end");
     }
@@ -91,7 +94,7 @@ public class TweetRepository {
      * @param tw
      */
     public void insertTweetByUser(Tweet tw) {
-        System.out.println("inserttweet init");
+        System.out.println("insertTweetByUser init");
         StringBuilder sb = new StringBuilder("INSERT INTO ")
                 .append(TABLE_NAME_BY_USER)
                 .append("(id,createdDate, text, source, isTruncated, latitude,longitude, isFavorited, user, contributors) ")
@@ -107,8 +110,9 @@ public class TweetRepository {
                 .append(tw.getUser()).append("', ")
                 .append(tw.getContributors()).append(");");
         final String query = sb.toString();
+        System.out.println("insertTweetByUser - command: " + query);
         session.execute(query);
-        System.out.println("inserttweet end");
+        System.out.println("insertTweetByUser end");
     }
 
 
@@ -118,39 +122,45 @@ public class TweetRepository {
      * @return
      */
     public List<Tweet> selectAll() {
-        System.out.println("Printing All normal table");
+
+        System.out.println("selectAll - init");
         StringBuilder sb = new StringBuilder("SELECT * FROM ").append(TABLE_NAME);
 
         final String query = sb.toString();
         ResultSet rs = session.execute(query);
 
+        System.out.println("selectAll - command: " + query);
+
         List<Tweet> tweets = new ArrayList<Tweet>();
 
         for (Row r : rs) {
             Tweet tw = new Tweet(r.getDate("createdDate"),r.getString("text"), r.getString("source"), r.getBool("isTruncated"),r.getDouble("latitude"),r.getDouble("longitude"),r.getBool("isFavorited"),r.getString("user"),r.getLong("contributors"));
             tweets.add(tw);
         }
+
+        System.out.println("selectAll - end");
         return tweets;
     }
 
     /**
-     * Select all tweet from tweet by User
+     * Select all tweet from tweet by Userrod1
      *
      * @return
      */
     public List<Tweet> selectAllByUser() {
-        System.out.println("Printing All by user");
+        System.out.println("selectAllByUser - init");
         StringBuilder sb = new StringBuilder("SELECT * FROM ").append(TABLE_NAME_BY_USER);
 
         final String query = sb.toString();
         ResultSet rs = session.execute(query);
-
+        System.out.println("selectAllByUser - command: " + query);
         List<Tweet> tweets = new ArrayList<Tweet>();
 
         for (Row r : rs) {
             Tweet tw = new Tweet(r.getDate("createdDate"),r.getString("text"), r.getString("source"), r.getBool("isTruncated"),r.getDouble("latitude"),r.getDouble("longitude"),r.getBool("isFavorited"),r.getString("user"),r.getLong("contributors"));
             tweets.add(tw);
         }
+        System.out.println("selectAllByUser - end");
         return tweets;
     }
 
@@ -159,24 +169,26 @@ public class TweetRepository {
      * Delete a tweet by User.
      */
     public void deleteTweetByUser(String user) {
-        System.out.println("deletetweet init");
+        System.out.println("deleteTweetByUser  - init");
         StringBuilder sb = new StringBuilder("DELETE FROM ").append(TABLE_NAME_BY_USER).append(" WHERE user = '").append(user).append("';");
 
         final String query = sb.toString();
+        System.out.println("deleteTweetByUser - command: " + query);
         session.execute(query);
-        System.out.println("deleted"+ user);
+        System.out.println("deleteTweetByUser end - user: "+ user);
     }
 
     /**
      * Delete a tweet.
      */
     public void deleteTweet(Tweet tw) {
-        System.out.println("deletetweet by uuid");
+        System.out.println("deletetweet  - init");
         StringBuilder sb = new StringBuilder("DELETE FROM ").append(TABLE_NAME).append(" WHERE id = ").append(tw.getUUID()).append(";");
 
         final String query = sb.toString();
+        System.out.println("deletetweet - command: " + query);
         session.execute(query);
-        System.out.println("deletetweet by uuid end");
+        System.out.println("deletetweet - end");
     }
 
     /**
@@ -185,28 +197,30 @@ public class TweetRepository {
      * @param tableName the name of the table to delete.
      */
     public void deleteTable(String tableName) {
-        System.out.println("deleteTable init");
+        System.out.println("deleteTable - init");
         StringBuilder sb = new StringBuilder("DROP TABLE IF EXISTS ").append(tableName);
 
         final String query = sb.toString();
+        System.out.println("deleteTable - command: " + query);
         session.execute(query);
         System.out.println("Delete table "+ tableName + "end");
     }
 
     public Tweet selectByUser(String user) {
+        System.out.println("selectByUser - ini user: "+ user );
         StringBuilder sb = new StringBuilder("SELECT * FROM ").append(TABLE_NAME_BY_USER).append(" WHERE user = '").append(user).append("';");
 
         final String query = sb.toString();
 
         ResultSet rs = session.execute(query);
-
+        System.out.println("selectByUser - command: " + query);
         List<Tweet> tweets = new ArrayList<Tweet>();
 
         for (Row r : rs) {
             Tweet tw = new Tweet(r.getDate("createdDate"),r.getString("text"), r.getString("source"), r.getBool("isTruncated"),r.getDouble("latitude"),r.getDouble("longitude"),r.getBool("isFavorited"),r.getString("user"),r.getLong("contributors"));
             tweets.add(tw);
         }
-
+        System.out.println("selectByUser end user: " + user );
         return tweets.get(0);
     }
 }
